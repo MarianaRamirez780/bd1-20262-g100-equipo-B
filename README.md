@@ -16,4 +16,7 @@ Cada carpeta corresponde a una de las tareas solicitadas en clase.
 <h4>Integrante: Miguel Ángel Carmona Álvarez</h4>
 <h4>Integrante: Mariana Ramírez Ramírez </h4>
 
+<hr>
 <h3>Estructura del Repositorio</h3>
+<img width="921" height="532" alt="image" src="https://github.com/user-attachments/assets/72f78c38-3bb8-4fad-9712-238483ef4002" />
+
