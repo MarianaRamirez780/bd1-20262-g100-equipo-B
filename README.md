@@ -3,6 +3,7 @@
 
 <h1>Programa: Ingenieria en Desarrollo de Software</h1>
 <h1>Curso: Base de Datos I (Grupo051/SD1004)</h1>
+<h2>Semestre: #3</h2>
 <h2>Profesor:  Jaime E.Soto U.</h2>
 <h2>Grupo B</h2>
 
