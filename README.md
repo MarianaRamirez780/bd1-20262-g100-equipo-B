@@ -1,7 +1,7 @@
 # bd1-20262-g100-equipo-B
 <img width="776" height="206" alt="image" src="https://github.com/user-attachments/assets/c72acd56-db2f-4a1f-8bc3-da6f6afb41fb" />
 
-<h1>Programa: Ingenieria de Desarrollo de Software</h1>
+<h1>Programa: Ingenieria en Desarrollo de Software</h1>
 <h1>Curso: Base de Datos I (Grupo051/SD1004)</h1>
 <h2>Profesor:  Jaime E.Soto U.</h2>
 <h2>Grupo B</h2>
