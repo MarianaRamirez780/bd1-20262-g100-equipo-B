@@ -11,6 +11,6 @@ este repositorio contiene las tareas prácticas del curso Base de Datos l, desar
 Cada carpeta corresponde a una de las tareas solicitadas en clase.
 
 <h3>Miembros del Equipo</h3>
-<h4>Esteban Gómez Mancipe</h4>
-<h4>Miguel Ángel Carmona Álvarez</h4>
-<h4>Mariana Ramírez Ramírez </h4>
+<h4>líder: Esteban Gómez Mancipe</h4>
+<h4>Integrante: Miguel Ángel Carmona Álvarez</h4>
+<h4>Integrante: Mariana Ramírez Ramírez </h4>
