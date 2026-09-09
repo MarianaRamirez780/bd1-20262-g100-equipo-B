@@ -15,3 +15,5 @@ Cada carpeta corresponde a una de las tareas solicitadas en clase.
 <h4>líder: Esteban Gómez Mancipe</h4>
 <h4>Integrante: Miguel Ángel Carmona Álvarez</h4>
 <h4>Integrante: Mariana Ramírez Ramírez </h4>
+
+<h3>Estructura del Repositorio</h3>
