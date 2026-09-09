@@ -1,4 +1,16 @@
 # bd1-20262-g100-equipo-B
-<h1>Progrma: Ingenieria de Desarrollo de Software</h1>
+<img width="776" height="206" alt="image" src="https://github.com/user-attachments/assets/c72acd56-db2f-4a1f-8bc3-da6f6afb41fb" />
+
+<h1>Programa: Ingenieria de Desarrollo de Software</h1>
+<h1>Curso: Base de Datos I (Grupo051/SD1004)</h1>
+<h2>Profesor:  Jaime E.Soto U.</h2>
+<h2>Grupo B</h2>
+
+<h3>Propósito</h3>
 este repositorio contiene las tareas prácticas del curso Base de Datos l, desarrolladas por el equipo de trabajo como parte de la evaluación del semestre.
 Cada carpeta corresponde a una de las tareas solicitadas en clase.
+
+<h3>Miembros del Equipo</h3>
+<h4>Esteban Gómez Mancipe</h4>
+<h4>Miguel Ángel Carmona Álvarez</h4>
+<h4>Mariana Ramírez Ramírez </h4>
