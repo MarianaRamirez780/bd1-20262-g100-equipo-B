@@ -7,7 +7,7 @@
 <h2>Grupo B</h2>
 
 <h3>Propósito</h3>
-este repositorio contiene las tareas prácticas del curso Base de Datos l, desarrolladas por el equipo de trabajo como parte de la evaluación del semestre.
+Este repositorio contiene las tareas prácticas del curso Base de Datos l, desarrolladas por el equipo de trabajo como parte de la evaluación del semestre.
 Cada carpeta corresponde a una de las tareas solicitadas en clase.
 
 <h3>Miembros del Equipo</h3>
