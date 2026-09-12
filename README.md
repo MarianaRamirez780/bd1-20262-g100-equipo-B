@@ -20,4 +20,5 @@ Cada carpeta corresponde a una de las tareas solicitadas en clase.
 <hr>
 <h3>Estructura del Repositorio</h3>
 <img width="921" height="532" alt="image" src="https://github.com/user-attachments/assets/72f78c38-3bb8-4fad-9712-238483ef4002" />
-
+video
+https://youtu.be/RoJRRjJGf3M?si=Ao2V3h0CQo-F9ttc
