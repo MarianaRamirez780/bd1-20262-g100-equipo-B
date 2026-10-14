@@ -1,0 +1,231 @@
+--
+-- Scripst de Creación de la Base de Datos
+--
+-- Todas las instrucciones se DEBEN EJECUTAR EN SECUENCIA SIN ERRORES
+-- NOTA: Ojo con las tablas relacionadas. Primero las independientes y después las dependientes
+--
+
+--
+-- Creación de las tablas
+-- 
+
+CREATE TABLE rol (
+    id_rol SMALLSERIAL PRIMARY KEY,
+    nombre VARCHAR(30) NOT NULL,
+    descripcion VARCHAR(200)
+);
+
+CREATE TABLE tipo_usuario (
+    id_tipo_usuario SMALLSERIAL PRIMARY KEY,
+    nombre VARCHAR(30) NOT NULL,
+    descripcion VARCHAR(200)
+);
+
+CREATE TABLE dependencia (
+    id_depa SMALLSERIAL PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE tipo_servicio (
+    id_tipo_servicio SMALLSERIAL PRIMARY KEY,
+    nombre VARCHAR(30) NOT NULL,
+    descripcion VARCHAR(200)
+);
+
+CREATE TABLE tipo_producto (
+    id_tipo_producto SMALLSERIAL PRIMARY KEY,
+    nombre VARCHAR(30) NOT NULL,
+    descripcion VARCHAR(200)
+);
+
+CREATE TABLE tipo_evento (
+    id_tipo_evento SMALLSERIAL PRIMARY KEY,
+    nombre VARCHAR(30) NOT NULL,
+    descripcion VARCHAR(500)
+);
+
+CREATE TABLE usuario (
+    id_usuario SERIAL PRIMARY KEY,
+    id_rol SMALLINT NOT NULL REFERENCES rol(id_rol),
+    nombre_1 VARCHAR(30) NOT NULL,
+    nombre_2 VARCHAR(30),
+    apellido_1 VARCHAR(30) NOT NULL,
+    apellido_2 VARCHAR(30) NOT NULL,
+    fecha_nac DATE NOT NULL,
+    edad SMALLINT NOT NULL CHECK (edad >= 0 AND edad <= 150),
+    sexo CHAR(1),
+    correo VARCHAR(50) NOT NULL UNIQUE,
+    contrasena VARCHAR(25) NOT NULL,
+    telefono VARCHAR(15),
+    fecha_registro TIMESTAMP NOT NULL
+);
+
+CREATE TABLE usuario_tipo_usuario (
+    id_usuario INTEGER NOT NULL REFERENCES usuario(id_usuario) ON DELETE CASCADE,
+    id_tipo_usuario SMALLINT NOT NULL REFERENCES tipo_usuario(id_tipo_usuario) ON DELETE CASCADE,
+    PRIMARY KEY (id_usuario, id_tipo_usuario)
+);
+
+CREATE TABLE usuario_dependencia (
+    id_depa SMALLINT NOT NULL REFERENCES dependencia(id_depa) ON DELETE CASCADE,
+    id_usuario INTEGER NOT NULL REFERENCES usuario(id_usuario) ON DELETE CASCADE,
+    PRIMARY KEY (id_depa, id_usuario)
+);
+
+CREATE TABLE grupo (
+    id_grupo SERIAL PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    id_perfil INTEGER NOT NULL,
+    descipcion VARCHAR(500),
+    fecha_creacion TIMESTAMP NOT NULL
+);
+
+CREATE TABLE perfil (
+    id_perfil SERIAL PRIMARY KEY,
+    id_usuario INTEGER NOT NULL REFERENCES usuario(id_usuario) ON DELETE CASCADE,
+    id_grupo INTEGER NOT NULL REFERENCES grupo(id_grupo) ON DELETE CASCADE,
+    biografia VARCHAR(500),
+    foto BYTEA NOT NULL,
+    perfil_extra JSONB,
+    fecha_perfil TIMESTAMP NOT NULL
+);
+
+ALTER TABLE grupo 
+ADD CONSTRAINT fk_grupo_perfil 
+FOREIGN KEY (id_perfil) REFERENCES perfil(id_perfil) ON DELETE RESTRICT;
+
+CREATE TABLE usuario_grupo (
+    id_usuario INTEGER NOT NULL REFERENCES usuario(id_usuario) ON DELETE CASCADE,
+    id_grupo INTEGER NOT NULL REFERENCES grupo(id_grupo) ON DELETE CASCADE,
+    PRIMARY KEY (id_usuario, id_grupo)
+);
+
+CREATE TABLE publicacion (
+    id_publicacion BIGSERIAL PRIMARY KEY,
+    id_usuario INTEGER NOT NULL REFERENCES usuario(id_usuario) ON DELETE CASCADE,
+    id_perfil INTEGER NOT NULL REFERENCES perfil(id_perfil) ON DELETE CASCADE,
+    titulo VARCHAR(50) NOT NULL,
+    texto VARCHAR(5000),
+    URL VARCHAR(1000),
+    imagen BYTEA,
+    fecha_publicacion TIMESTAMP NOT NULL
+);
+
+CREATE TABLE comentario (
+    id_comentario BIGSERIAL PRIMARY KEY,
+    id_usuario INTEGER NOT NULL REFERENCES usuario(id_usuario) ON DELETE CASCADE,
+    id_publicacion BIGINT NOT NULL REFERENCES publicacion(id_publicacion) ON DELETE CASCADE,
+    texto VARCHAR(2000),
+    fecha_comentario TIMESTAMP NOT NULL
+);
+
+CREATE TABLE servicio (
+    id_servicio SERIAL PRIMARY KEY,
+    id_usuario INTEGER NOT NULL REFERENCES usuario(id_usuario) ON DELETE CASCADE,
+    nombre VARCHAR(50) NOT NULL,
+    descripcion VARCHAR(200),
+    fecha_servicio TIMESTAMP NOT NULL,
+    lugar VARCHAR(40)
+);
+
+CREATE TABLE servicio_tipo_servicio (
+    id_servicio INTEGER NOT NULL REFERENCES servicio(id_servicio) ON DELETE CASCADE,
+    id_tipo_servicio SMALLINT NOT NULL REFERENCES tipo_servicio(id_tipo_servicio) ON DELETE CASCADE,
+    PRIMARY KEY (id_servicio, id_tipo_servicio)
+);
+
+CREATE TABLE producto (
+    id_producto SERIAL PRIMARY KEY,
+    id_tipo_producto SMALLINT NOT NULL REFERENCES tipo_producto(id_tipo_producto),
+    id_usuario INTEGER NOT NULL REFERENCES usuario(id_usuario) ON DELETE CASCADE,
+    nombre VARCHAR(30) NOT NULL,
+    descripcion VARCHAR(300),
+    cantidad INT NOT NULL CHECK (cantidad >= 0 AND cantidad <= 1000),
+    precio NUMERIC(10, 2) NOT NULL CHECK (precio >= 0 AND precio <= 20000000),
+    fecha_producto TIMESTAMP NOT NULL
+);
+
+CREATE TABLE solicitud (
+    id_solicitud SERIAL PRIMARY KEY,
+    id_usuario INTEGER NOT NULL REFERENCES usuario(id_usuario) ON DELETE CASCADE,
+    id_servicio INTEGER REFERENCES servicio(id_servicio) ON DELETE SET NULL,
+    id_producto INTEGER REFERENCES producto(id_producto) ON DELETE SET NULL,
+    cantidad INT CHECK (cantidad >= 0 AND cantidad <= 1000),
+    fecha_solicitud TIMESTAMP NOT NULL
+);
+
+CREATE TABLE intercambio (
+    id_intercambio SERIAL PRIMARY KEY,
+    id_prod_ofrecido INTEGER NOT NULL REFERENCES producto(id_producto) ON DELETE CASCADE,
+    id_prod_solicitado INTEGER NOT NULL REFERENCES producto(id_producto) ON DELETE CASCADE,
+    id_usuario INTEGER NOT NULL REFERENCES usuario(id_usuario) ON DELETE CASCADE,
+    fecha_intercambio TIMESTAMP NOT NULL,
+    fecha_respuesta TIMESTAMP,
+    cantidad INT CHECK (cantidad >= 0 AND cantidad <= 1000),
+    respuesta CHAR(2),
+    CONSTRAINT chk_diferentes_productos CHECK (id_prod_ofrecido <> id_prod_solicitado)
+);
+
+CREATE TABLE chat_privado (
+    id_chat SERIAL PRIMARY KEY,
+    id_usuario_1 INTEGER NOT NULL REFERENCES usuario(id_usuario) ON DELETE CASCADE,
+    id_usuario_2 INTEGER NOT NULL REFERENCES usuario(id_usuario) ON DELETE CASCADE,
+    CONSTRAINT chk_usuarios_chat_diferentes CHECK (id_usuario_1 <> id_usuario_2)
+);
+
+CREATE TABLE mensaje_privado (
+    id_mensaje BIGSERIAL PRIMARY KEY,
+    id_chat INTEGER NOT NULL REFERENCES chat_privado(id_chat) ON DELETE CASCADE,
+    id_usuario INTEGER NOT NULL REFERENCES usuario(id_usuario) ON DELETE CASCADE,
+    texto VARCHAR(2000),
+    URL VARCHAR(2000),
+    imagen BYTEA,
+    audio BYTEA,
+    fecha_mensaje TIMESTAMP NOT NULL
+);
+
+CREATE TABLE evento (
+    id_evento SERIAL PRIMARY KEY,
+    id_tipo_evento SMALLINT NOT NULL REFERENCES tipo_evento(id_tipo_evento),
+    id_usuario INTEGER NOT NULL REFERENCES usuario(id_usuario) ON DELETE CASCADE,
+    nombre VARCHAR(30) NOT NULL,
+    contenido VARCHAR(600),
+    fecha_evento TIMESTAMP NOT NULL,
+    fecha_inicio TIMESTAMP NOT NULL,
+    fecha_fin TIMESTAMP,
+    lugar VARCHAR(30) NOT NULL,
+    CONSTRAINT chk_fechas_evento CHECK (fecha_fin IS NULL OR fecha_fin >= fecha_inicio)
+);
+
+CREATE TABLE usuario_evento (
+    id_usuario INTEGER NOT NULL REFERENCES usuario(id_usuario) ON DELETE CASCADE,
+    id_evento INTEGER NOT NULL REFERENCES evento(id_evento) ON DELETE CASCADE,
+    fecha_ingreso TIMESTAMP NOT NULL,
+    PRIMARY KEY (id_usuario, id_evento)
+);
+
+CREATE TABLE tipo_notificacion (
+    id_tipo_notificacion SMALLSERIAL PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    id_publicacion BIGINT REFERENCES publicacion(id_publicacion) ON DELETE CASCADE,
+    id_comentario BIGINT REFERENCES comentario(id_comentario) ON DELETE CASCADE,
+    id_servicio INTEGER REFERENCES servicio(id_servicio) ON DELETE CASCADE,
+    id_producto INTEGER REFERENCES producto(id_producto) ON DELETE CASCADE,
+    id_solicitud INTEGER REFERENCES solicitud(id_solicitud) ON DELETE CASCADE,
+    id_intercambio INTEGER REFERENCES intercambio(id_intercambio) ON DELETE CASCADE,
+    id_evento INTEGER REFERENCES evento(id_evento) ON DELETE CASCADE,
+    id_mensaje BIGINT REFERENCES mensaje_privado(id_mensaje) ON DELETE CASCADE
+);
+
+CREATE TABLE notificacion (
+    id_notificacion BIGSERIAL PRIMARY KEY,
+    id_tipo_notificacion SMALLINT NOT NULL REFERENCES tipo_notificacion(id_tipo_notificacion) ON DELETE CASCADE,
+    mensaje VARCHAR(50),
+    fecha_notificacion TIMESTAMP NOT NULL
+);
+
+CREATE TABLE notificacion_usuario (
+    id_usuario INTEGER NOT NULL REFERENCES usuario(id_usuario) ON DELETE CASCADE,
+    id_notificacion BIGINT NOT NULL REFERENCES notificacion(id_notificacion) ON DELETE CASCADE,
+    PRIMARY KEY (id_usuario, id_notificacion)
+);
