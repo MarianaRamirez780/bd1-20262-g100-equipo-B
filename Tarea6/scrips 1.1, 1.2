@@ -1,0 +1,303 @@
+scripts 1.1 y 1.2,
+
+INSERT INTO rol (id_rol, nombre, descripcion) VALUES
+(1, 'Administrador', 'Control total del sistema y gestión de usuarios'),
+(2, 'Auxiliar', 'Apoya la administración y moderación de contenidos'),
+(3, 'Miembro', 'Usuario registrado con acceso completo a las funcionalidades'),
+(4, 'Visitante', 'Usuario con acceso limitado de solo consulta');
+
+INSERT INTO tipo_usuario (id_tipo_usuario, nombre, descripcion) VALUES
+(1, 'Estudiante', 'Persona matriculada actualmente en la institución'),
+(2, 'Docente', 'Profesor vinculado actualmente a la institución'),
+(3, 'Egresado', 'Persona que culminó sus estudios en la institución'),
+(4, 'Empleado', 'Personal administrativo o de apoyo vinculado actualmente'),
+(5, 'Empresario', 'Persona con empresa o emprendimiento propio'),
+(6, 'Ex-Empleado', 'Persona que estuvo vinculada como empleado'),
+(7, 'Ex-Estudiante', 'Persona que estuvo matriculada y no culminó sus estudios'),
+(8, 'Ex-Docente', 'Persona que estuvo vinculada como docente'),
+(9, 'Guess', 'Invitado externo a la comunidad institucional');
+
+INSERT INTO tipo_servicio (id_tipo_servicio, nombre, descripcion) VALUES
+(1, 'Asesoría académica', 'Tutorías y apoyo en asignaturas'),
+(2, 'Mantenimiento Moto', 'Reparación y mantenimiento de motocicletas'),
+(3, 'Mantenimiento Computadores', 'Reparación y soporte de equipos de cómputo'),
+(4, 'Transporte', 'Servicio de transporte de personas'),
+(5, 'Mensajería', 'Entrega de documentos y paquetes'),
+(6, 'Fotografía', 'Servicio de fotografía y video'),
+(7, 'Diseño gráfico', 'Diseño de logos, afiches y material publicitario'),
+(8, 'Desarrollo de software', 'Creación de aplicaciones y sitios web'),
+(9, 'Traducción', 'Traducción de documentos y textos'),
+(10, 'Clases de idiomas', 'Enseñanza de idiomas'),
+(11, 'Clases de música', 'Enseñanza de instrumentos y música'),
+(12, 'Asesoría contable', 'Apoyo en contabilidad y finanzas'),
+(13, 'Asesoría jurídica', 'Orientación legal básica'),
+(14, 'Catering', 'Preparación de comidas para eventos'),
+(15, 'Reparación de celulares', 'Mantenimiento y reparación de teléfonos móviles'),
+(16, 'Peluquería', 'Servicios de corte y cuidado del cabello'),
+(17, 'Entrenamiento deportivo', 'Preparación física y deportiva'),
+(18, 'Cuidado de mascotas', 'Paseo y cuidado de mascotas'),
+(19, 'Limpieza', 'Servicios de aseo y limpieza'),
+(20, 'Otros servicios', 'Servicios no clasificados en otra categoría');
+
+INSERT INTO tipo_producto (id_tipo_producto, nombre, descripcion) VALUES
+(1, 'Libros', 'Textos académicos y de lectura'),
+(2, 'Motocicletas', 'Motocicletas nuevas y usadas'),
+(3, 'Alimentos', 'Comidas y bebidas'),
+(4, 'Ropa', 'Prendas de vestir'),                                                              // 1.1
+(5, 'Calzado', 'Zapatos y zapatillas'),
+(6, 'Electrónica', 'Dispositivos y accesorios electrónicos'),
+(7, 'Computadores', 'Portátiles, de escritorio y periféricos'),
+(8, 'Celulares', 'Teléfonos móviles y accesorios'),
+(9, 'Muebles', 'Muebles para hogar y oficina'),
+(10, 'Electrodomésticos', 'Aparatos para el hogar'),
+(11, 'Bicicletas', 'Bicicletas y accesorios'),
+(12, 'Papelería', 'Útiles escolares y de oficina'),
+(13, 'Instrumentos musicales', 'Instrumentos y accesorios musicales'),
+(14, 'Artículos deportivos', 'Implementos para práctica deportiva'),
+(15, 'Videojuegos', 'Consolas y videojuegos'),
+(16, 'Herramientas', 'Herramientas manuales y eléctricas'),
+(17, 'Accesorios', 'Bolsos, relojes, joyería y similares'),
+(18, 'Artesanías', 'Productos hechos a mano'),
+(19, 'Repuestos', 'Repuestos para vehículos y equipos'),
+(20, 'Otros productos', 'Productos no clasificados en otra categoría');
+
+INSERT INTO tipo_evento (id_tipo_evento, nombre, descripcion) VALUES
+(1, 'Congresos', 'Encuentros académicos o profesionales de gran escala'),
+(2, 'Conferencias', 'Charlas magistrales sobre un tema específico'),
+(3, 'Talleres', 'Sesiones prácticas de aprendizaje'),
+(4, 'Seminarios', 'Reuniones de estudio y debate sobre un tema'),
+(5, 'Simposios', 'Encuentros de especialistas para discutir un tema'),
+(6, 'Foros', 'Espacios de discusión abierta'),
+(7, 'Cursos', 'Programas de formación de corta duración'),
+(8, 'Ferias', 'Exposición y venta de productos o proyectos'),
+(9, 'Exposiciones', 'Muestras de arte, ciencia o proyectos'),
+(10, 'Concursos', 'Competencias académicas, culturales o deportivas'),
+(11, 'Torneos deportivos', 'Competencias deportivas'),
+(12, 'Eventos culturales', 'Actividades artísticas y culturales'),
+(13, 'Conciertos', 'Presentaciones musicales'),
+(14, 'Obras de teatro', 'Presentaciones teatrales'),
+(15, 'Ceremonias de grado', 'Actos de graduación'),
+(16, 'Reuniones', 'Encuentros de trabajo o coordinación'),
+(17, 'Jornadas de voluntariado', 'Actividades de servicio social'),
+(18, 'Charlas', 'Presentaciones informales sobre un tema'),
+(19, 'Ruedas de negocio', 'Encuentros para generar contactos comerciales'),
+(20, 'Otros eventos', 'Eventos no clasificados en otra categoría');
+
+SELECT setval(pg_get_serial_sequence('rol', 'id_rol'), (SELECT MAX(id_rol) FROM rol));
+SELECT setval(pg_get_serial_sequence('tipo_usuario', 'id_tipo_usuario'), (SELECT MAX(id_tipo_usuario) FROM tipo_usuario));
+SELECT setval(pg_get_serial_sequence('tipo_servicio', 'id_tipo_servicio'), (SELECT MAX(id_tipo_servicio) FROM tipo_servicio));
+SELECT setval(pg_get_serial_sequence('tipo_producto', 'id_tipo_producto'), (SELECT MAX(id_tipo_producto) FROM tipo_producto));
+SELECT setval(pg_get_serial_sequence('tipo_evento', 'id_tipo_evento'), (SELECT MAX(id_tipo_evento) FROM tipo_evento));
+
+SELECT 'rol' AS tabla, COUNT(*) AS registros FROM rol
+UNION ALL SELECT 'tipo_usuario', COUNT(*) FROM tipo_usuario
+UNION ALL SELECT 'tipo_servicio', COUNT(*) FROM tipo_servicio
+UNION ALL SELECT 'tipo_producto', COUNT(*) FROM tipo_producto
+UNION ALL SELECT 'tipo_evento', COUNT(*) FROM tipo_evento;
+
+
+
+
+
+
+CREATE TEMP TABLE tmp_tipo AS
+SELECT n,
+       CASE WHEN n <= 7000  THEN 1
+            WHEN n <= 7500  THEN 2
+            WHEN n <= 17500 THEN 3
+            WHEN n <= 18000 THEN 4
+            WHEN n <= 18050 THEN 5
+            WHEN n <= 18100 THEN 6
+            WHEN n <= 18400 THEN 7
+            WHEN n <= 18500 THEN 8
+            ELSE 9
+       END AS tipo
+FROM generate_series(1, 18550) AS n;
+
+INSERT INTO usuario (id_rol, nombre_1, nombre_2, apellido_1, apellido_2,
+                     fecha_nac, sexo, correo, contrasena, telefono, fecha_registro)
+SELECT
+
+    CASE WHEN g.tipo = 4 AND g.n % 100 = 0 THEN 1
+         WHEN g.tipo = 4 AND g.n % 10  = 0 THEN 2
+         WHEN g.tipo = 9 THEN 4
+         ELSE 3 END,
+    g.nombre_1,
+    CASE WHEN g.tiene_n2 THEN g.nombre_2 END,
+    g.apellido_1,
+    g.apellido_2,                                                                 // 1.2
+    g.fecha_nac,
+    g.sexo,
+    'usuario' || g.n || '@ejemplo.edu.co',
+    left(md5(random()::text), 20),
+    (3000000000 + floor(random() * 300000000))::bigint,
+    now() - random() * interval '1095 days'
+FROM (
+    SELECT t.n, t.tipo,
+           (ARRAY['Juan','Carlos','Andrés','Luis','Miguel','Santiago','Daniel','David','Felipe','Sebastián',
+                  'María','Laura','Ana','Camila','Valentina','Sofía','Daniela','Paula','Carolina','Natalia']
+           )[1 + floor(random() * 20)::int] AS nombre_1,
+           (ARRAY['Juan','Carlos','Andrés','Luis','Miguel','Santiago','Daniel','David','Felipe','Sebastián',
+                  'María','Laura','Ana','Camila','Valentina','Sofía','Daniela','Paula','Carolina','Natalia']
+           )[1 + floor(random() * 20)::int] AS nombre_2,
+           random() < 0.5 AS tiene_n2,
+           (ARRAY['García','Rodríguez','Martínez','López','González','Pérez','Sánchez','Ramírez','Torres','Flores',
+                  'Rivera','Gómez','Díaz','Hernández','Vargas','Castro','Moreno','Jiménez','Ortiz','Ruiz']
+           )[1 + floor(random() * 20)::int] AS apellido_1,
+           (ARRAY['García','Rodríguez','Martínez','López','González','Pérez','Sánchez','Ramírez','Torres','Flores',
+                  'Rivera','Gómez','Díaz','Hernández','Vargas','Castro','Moreno','Jiménez','Ortiz','Ruiz']
+           )[1 + floor(random() * 20)::int] AS apellido_2,
+           CASE WHEN random() < 0.5 THEN 'M' ELSE 'F' END AS sexo,
+
+           CURRENT_DATE - (r.emin * 365 + floor(random() * ((r.emax - r.emin) * 365))::int) AS fecha_nac
+    FROM tmp_tipo t
+    JOIN (VALUES (1,18,30),(2,28,65),(3,23,60),(4,22,62),(5,25,65),
+                 (6,25,65),(7,18,35),(8,40,75),(9,18,70)) AS r(tipo, emin, emax)
+      ON r.tipo = t.tipo
+    ORDER BY t.n
+    OFFSET 0
+) g;
+
+INSERT INTO usuario_tipo_usuario (id_usuario, id_tipo_usuario)
+SELECT u.id_usuario, t.tipo
+FROM usuario u
+JOIN tmp_tipo t ON t.n = substring(u.correo from 'usuario([0-9]+)@')::int;
+
+INSERT INTO evento (id_tipo_evento, id_usuario, nombre, contenido,
+                    fecha_evento, fecha_inicio, fecha_fin, lugar)
+SELECT g.tipo, g.usr,
+       g.prefijo || ' #' || g.n,
+       'Evento de prueba número ' || g.n || ' generado automáticamente.',
+       g.f_evento,
+       g.f_evento + g.dias * interval '1 day',
+       g.f_evento + g.dias * interval '1 day' + g.horas * interval '1 hour',
+       g.lugar
+FROM (
+    SELECT n,
+           1 + floor(random() * 20)::int      AS tipo,
+           1 + floor(random() * 18550)::int   AS usr,
+           (ARRAY['Congreso','Conferencia','Taller','Seminario','Foro',
+                  'Feria','Concurso','Torneo','Charla','Encuentro'])[1 + floor(random() * 10)::int] AS prefijo,
+           (ARRAY['Auditorio Principal','Biblioteca','Cancha Deportiva','Aula Magna',
+                  'Sala de Conferencias','Plazoleta Central','Laboratorio de Cómputo','Cafetería'])[1 + floor(random() * 8)::int] AS lugar,
+           now() - random() * interval '365 days' AS f_evento,
+           1 + floor(random() * 60)::int       AS dias,
+           1 + floor(random() * 8)::int        AS horas
+    FROM generate_series(1, 3000) AS n
+    OFFSET 0
+) g;
+
+INSERT INTO servicio (id_tipo_servicio, id_usuario, nombre, descripcion, fecha_servicio)
+SELECT 1 + floor(random() * 20)::int, g.usr,
+       g.prefijo || ' ' || g.n,
+       'Servicio de prueba número ' || g.n || ' generado automáticamente.',
+       now() - random() * interval '365 days'
+FROM (
+    SELECT n,
+           1 + floor(random() * 18550)::int AS usr,
+           (ARRAY['Asesoría','Clases','Mantenimiento','Diseño','Transporte',
+                  'Reparación','Fotografía','Traducción','Catering','Limpieza'])[1 + floor(random() * 10)::int] AS prefijo
+    FROM generate_series(1, 3000) AS n
+    OFFSET 0
+) g;
+
+INSERT INTO producto (id_tipo_producto, id_usuario, nombre, descripcion,
+                      cantidad, precio, fecha_producto)
+SELECT g.tipo, g.usr,
+       g.prefijo || ' ' || g.n,
+       'Producto de prueba número ' || g.n || ' generado automáticamente.',
+       g.cantidad,
+       g.precio,
+       now() - random() * interval '365 days'
+FROM (
+    SELECT n,
+           1 + floor(random() * 20)::int      AS tipo,
+           1 + floor(random() * 18550)::int   AS usr,
+           (ARRAY['Libro','Moto','Bicicleta','Portátil','Celular',
+                  'Silla','Escritorio','Guitarra','Balón','Zapatos'])[1 + floor(random() * 10)::int] AS prefijo,
+           (1 + floor(random() * 1000))::smallint                         AS cantidad,
+           round((1000 + random() * 4999000)::numeric, 2)                 AS precio
+    FROM generate_series(1, 3000) AS n
+    OFFSET 0
+) g;
+
+INSERT INTO evento_usuario (id_usuario, id_evento, fecha_ingreso)
+SELECT g.usr, g.ev, e.fecha_evento + random() * interval '10 days'
+FROM (
+    SELECT 1 + floor(random() * 18550)::int AS usr,
+           1 + floor(random() * 3000)::int  AS ev
+    FROM generate_series(1, 6000)
+    OFFSET 0
+) g
+JOIN evento e ON e.id_evento = g.ev
+ON CONFLICT DO NOTHING;
+
+INSERT INTO detalle_servicio (id_usuario, id_servicio, lugar, fecha_realizacion_servicio)
+SELECT g.usr, g.srv, g.lugar, now() - random() * interval '300 days'
+FROM (
+    SELECT 1 + floor(random() * 18550)::int AS usr,
+           1 + floor(random() * 3000)::int  AS srv,
+           (ARRAY['Campus Principal','Biblioteca','Domicilio del cliente','Sala de Estudio',
+                  'Cafetería','Laboratorio','Plazoleta Central','Oficina del prestador'])[1 + floor(random() * 8)::int] AS lugar
+    FROM generate_series(1, 5000)
+    OFFSET 0
+) g;
+
+INSERT INTO compra_producto (id_usuario, id_producto, cantidad_compra, precio_compra, fecha_compra)
+SELECT g.usr, g.prod, g.cant, p.precio, now() - random() * interval '300 days'
+FROM (
+    SELECT 1 + floor(random() * 18550)::int AS usr,
+           1 + floor(random() * 3000)::int  AS prod,
+           (1 + floor(random() * 5))::smallint AS cant
+    FROM generate_series(1, 5000)
+    OFFSET 0
+) g
+JOIN producto p ON p.id_producto = g.prod;
+
+ANALYZE;
+
+SELECT 'usuario' AS tabla, COUNT(*) AS registros FROM usuario
+UNION ALL SELECT 'evento', COUNT(*) FROM evento
+UNION ALL SELECT 'servicio', COUNT(*) FROM servicio
+UNION ALL SELECT 'producto', COUNT(*) FROM producto
+UNION ALL SELECT 'evento_usuario', COUNT(*) FROM evento_usuario
+UNION ALL SELECT 'detalle_servicio', COUNT(*) FROM detalle_servicio
+UNION ALL SELECT 'compra_producto', COUNT(*) FROM compra_producto;
+
+SELECT tu.id_tipo_usuario, tu.nombre, COUNT(*) AS usuarios
+FROM usuario_tipo_usuario utu
+JOIN tipo_usuario tu ON tu.id_tipo_usuario = utu.id_tipo_usuario
+GROUP BY tu.id_tipo_usuario, tu.nombre
+ORDER BY tu.id_tipo_usuario;
+
+SELECT 'evento sin usuario' AS prueba, COUNT(*) FROM evento e
+  LEFT JOIN usuario u ON u.id_usuario = e.id_usuario WHERE u.id_usuario IS NULL
+UNION ALL SELECT 'servicio sin usuario', COUNT(*) FROM servicio s
+  LEFT JOIN usuario u ON u.id_usuario = s.id_usuario WHERE u.id_usuario IS NULL
+UNION ALL SELECT 'producto sin usuario', COUNT(*) FROM producto p
+  LEFT JOIN usuario u ON u.id_usuario = p.id_usuario WHERE u.id_usuario IS NULL
+UNION ALL SELECT 'compra sin producto', COUNT(*) FROM compra_producto c
+  LEFT JOIN producto p ON p.id_producto = c.id_producto WHERE p.id_producto IS NULL;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
